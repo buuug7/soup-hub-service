@@ -1,8 +1,18 @@
-GET http://localhost:3000/cats
+
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "username": "buuug7",
+  "password": "123"
+}
+
+> {% client.global.set('token', response.body.access_token) %}
 
 ###
 
 
-POST http://localhost:3000/cats/create2
+GET http://localhost:3000/user/profile
+Authorization: Bearer {{token}}
 
 ###
