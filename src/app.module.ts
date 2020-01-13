@@ -7,9 +7,10 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { SoupsModule } from './soups/soups.module';
 
 @Module({
-  imports: [CatsModule, TypeOrmModule.forRoot(), AuthModule, UsersModule],
+  imports: [CatsModule, TypeOrmModule.forRoot(), AuthModule, UsersModule, SoupsModule],
   controllers: [AppController],
   providers: [AppService],
 })
