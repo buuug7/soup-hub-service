@@ -8,9 +8,16 @@ import { UsersModule } from './users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SoupsModule } from './soups/soups.module';
+import { Connection } from 'typeorm';
 
 @Module({
-  imports: [CatsModule, TypeOrmModule.forRoot(), AuthModule, UsersModule, SoupsModule],
+  imports: [
+    CatsModule,
+    TypeOrmModule.forRoot(),
+    AuthModule,
+    UsersModule,
+    SoupsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

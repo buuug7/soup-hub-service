@@ -3,8 +3,8 @@ POST {{host}}/auth/login
 Content-Type: application/json
 
 {
-  "username": "buuug7",
-  "password": "123"
+  "email": "youpp@126.com",
+  "password": "111111"
 }
 
 > {% client.global.set('token', response.body.access_token);%}

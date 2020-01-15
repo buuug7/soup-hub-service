@@ -9,7 +9,7 @@ module.exports = [
     database: 'soup_hub',
     synchronize: true,
     logging: true,
-    entities: ['src/entity/**/*.ts'],
+    entities: ['dist/**/*.entity{.ts,.js}'],
     migrations: ['src/migration/**/*.ts'],
     subscribers: ['src/subscriber/**/*.ts'],
     cli: {
