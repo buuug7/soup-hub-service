@@ -4,8 +4,9 @@ import {
   Column,
   OneToMany,
   BaseEntity,
-  createQueryBuilder,
+  createQueryBuilder, ManyToMany,
 } from 'typeorm';
+import { Soup } from '../soups/soup.entity';
 
 // import { Soup } from '../Soup';
 // import { UserSoupStar } from './UserSoupStar';
@@ -51,8 +52,12 @@ export class User extends BaseEntity {
   })
   updatedAt: Date;
 
-  // @OneToMany(type => Soup, soup => soup.user)
-  // soups: Soup[];
+  @OneToMany(type => Soup, soup => soup.user)
+  soups: Soup[];
+
+  @ManyToMany(type => Soup, soup => soup.starUsers)
+  starSoups: Soup[];
+
   //
   // @OneToMany(type => Comment, comment => comment.user)
   // comments: Comment[];

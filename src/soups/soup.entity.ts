@@ -4,6 +4,7 @@ import {
   createQueryBuilder,
   Entity,
   getManager,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -11,6 +12,7 @@ import {
 // import { UserSoupStar } from './UserSoupStar';
 // import { Comment } from './Comment';
 import { PaginationParam, simplePagination } from '../common/pagination';
+import { User } from '../users/user.entity';
 
 @Entity()
 export class Soup extends BaseEntity {
@@ -50,10 +52,13 @@ export class Soup extends BaseEntity {
   })
   deletedAt: Date;
 
-  // @ManyToOne(type => User, user => user.soups, {
-  //   eager: false,
-  // })
-  // user: User;
+  @ManyToOne(type => User, user => user.soups, {
+    eager: false,
+  })
+  user: User;
+
+  @ManyToMany(type => User, user => user.starSoups)
+  starUsers: User;
 
   /**
    * star the soup with given user
@@ -122,7 +127,8 @@ export class Soup extends BaseEntity {
    * @param content
    * @param user
    * @param targetComment
-  //  */
+   */
+
   // async createComment({ content, user, targetComment }) {
   //   const comment = Comment.create({
   //     content: content,
