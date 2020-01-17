@@ -9,6 +9,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SoupsModule } from './soups/soups.module';
 import { Connection } from 'typeorm';
+import { SeedsModule } from './seeds/seeds.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { Connection } from 'typeorm';
     AuthModule,
     UsersModule,
     SoupsModule,
+    SeedsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

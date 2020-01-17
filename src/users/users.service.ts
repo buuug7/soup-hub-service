@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
+import { hashSync } from 'bcrypt';
+import { UserCreate } from './users.interface';
 
 @Injectable()
 export class UsersService {
@@ -11,5 +13,15 @@ export class UsersService {
         email,
       })
       .getOne();
+  }
+
+  async create(user: UserCreate) {
+    return await User.save(
+      User.create({
+        ...user,
+        password: hashSync(user.password, 3),
+        createdAt: new Date(),
+      }),
+    );
   }
 }

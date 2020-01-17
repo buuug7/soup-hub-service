@@ -4,7 +4,7 @@ import {
   Column,
   OneToMany,
   BaseEntity,
-  createQueryBuilder, ManyToMany,
+  createQueryBuilder, ManyToMany, JoinTable,
 } from 'typeorm';
 import { Soup } from '../soups/soup.entity';
 
@@ -56,6 +56,7 @@ export class User extends BaseEntity {
   soups: Soup[];
 
   @ManyToMany(type => Soup, soup => soup.starUsers)
+  @JoinTable()
   starSoups: Soup[];
 
   //
