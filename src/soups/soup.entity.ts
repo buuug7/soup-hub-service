@@ -14,7 +14,11 @@ import {
 import { PaginationParam, simplePagination } from '../common/pagination';
 import { User } from '../users/user.entity';
 
-@Entity()
+@Entity({
+  orderBy: {
+    id: 'DESC',
+  },
+})
 export class Soup extends BaseEntity {
   static readonly commentableType = 'SOUP';
 

@@ -1,4 +1,5 @@
 
+### Login
 POST {{host}}/auth/login
 Content-Type: application/json
 
@@ -9,19 +10,17 @@ Content-Type: application/json
 
 > {% client.global.set('token', response.body.access_token);%}
 
-###
-
-
-GET {{host}}/users/profile
-Authorization: Bearer {{token}}
-
-###
 
 ### seed users
 GET {{host}}/seeds/users
 
 ### seed soups
 GET {{host}}/seeds/soups
+
+
+###
+GET {{host}}/users/profile
+Authorization: Bearer {{token}}
 
 ###
 POST {{host}}/users
@@ -62,5 +61,12 @@ Content-Type: application/json
 DELETE {{host}}/soups/28
 Authorization: Bearer {{token}}
 
+### list soup
+### query: currentPage, perPage, username, content, createdAt(YYYYMMDD)
+GET {{host}}/soups?currentPage=1&createdAt=<=&createdAt=20201020&username=buuug7&content=
+Authorization: Bearer {{token}}
+
 ###
+
+
 

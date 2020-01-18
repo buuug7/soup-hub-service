@@ -41,4 +41,9 @@ export class SoupsController {
   async delete(@Param('id') id) {
     return this.soupsService.delete(id);
   }
+
+  @Get()
+  async list() {
+    return this.soupsService.list();
+  }
 }
