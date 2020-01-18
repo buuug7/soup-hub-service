@@ -74,8 +74,23 @@ Authorization: Bearer {{token}}
 POST {{host}}/soups/unStar/1
 Authorization: Bearer {{token}}
 
+### comment soup
+POST {{host}}/soups/1/comment
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "content": "my first comment on soup one "
+}
+
+### reply comment
+POST {{host}}/comments/2/reply
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "content": "I reply the first comment"
+}
+
 ###
-
-
-
 

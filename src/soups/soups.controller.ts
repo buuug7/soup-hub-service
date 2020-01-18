@@ -13,7 +13,7 @@ import {
 import { SoupsService } from './soups.service';
 import { SoupForm } from './soups.interface';
 import { AuthGuard } from '@nestjs/passport';
-import { User } from '../users/user.entity';
+import { CommentForm } from '../comments/comments.interface';
 
 @Controller('soups')
 export class SoupsController {
@@ -57,5 +57,17 @@ export class SoupsController {
   @UseGuards(AuthGuard('jwt'))
   async unStar() {
     return this.soupsService.unStar();
+  }
+
+  @Post(':id/comment')
+  @UseGuards(AuthGuard('jwt'))
+  createComment(
+    @Body() commentForm: CommentForm,
+    @Param('id') soupId,
+    @Req() req,
+  ) {
+
+    console.log('commentForm=', commentForm);
+    return this.soupsService.createComment(soupId, commentForm, req.user);
   }
 }

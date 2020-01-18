@@ -4,9 +4,12 @@ import {
   Column,
   OneToMany,
   BaseEntity,
-  createQueryBuilder, ManyToMany, JoinTable,
+  createQueryBuilder,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 import { Soup } from '../soups/soup.entity';
+import { Comment } from '../comments/comment.entity';
 
 // import { Soup } from '../Soup';
 // import { UserSoupStar } from './UserSoupStar';
@@ -59,10 +62,9 @@ export class User extends BaseEntity {
   @JoinTable()
   starSoups: Soup[];
 
-  //
-  // @OneToMany(type => Comment, comment => comment.user)
-  // comments: Comment[];
-  //
+  @OneToMany(type => Comment, comment => comment.user)
+  comments: Comment[];
+
   // /**
   //  * get the soups of user already star
   //  */

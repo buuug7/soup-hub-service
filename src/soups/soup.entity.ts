@@ -3,12 +3,10 @@ import {
   Column,
   createQueryBuilder,
   Entity,
-  getManager,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-// import { User } from './User';
 // import { UserSoupStar } from './UserSoupStar';
 // import { Comment } from './Comment';
 import { PaginationParam, simplePagination } from '../common/pagination';
@@ -21,7 +19,7 @@ import { from } from 'rxjs';
   },
 })
 export class Soup extends BaseEntity {
-  static readonly commentableType = 'SOUP';
+  static readonly commentType = 'SOUP';
 
   @PrimaryGeneratedColumn()
   id: number;

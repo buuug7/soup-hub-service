@@ -5,10 +5,15 @@ import { Request } from 'express';
 import { PaginationParam, simplePagination } from '../common/pagination';
 import { createQueryBuilder } from 'typeorm';
 import { User } from '../users/user.entity';
+import { CommentForm } from '../comments/comments.interface';
+import { CommentsService } from '../comments/comments.service';
 
 @Injectable()
 export class SoupsService {
-  constructor(@Inject(REQUEST) private readonly request: Request) {}
+  constructor(
+    @Inject(REQUEST) private readonly request: Request,
+    private readonly commentsService: CommentsService,
+  ) {}
 
   /**
    * Get the specified resource
@@ -135,5 +140,20 @@ export class SoupsService {
 
     await soup.unStar(user);
     return soup.starCount();
+  }
+
+  /**
+   * create soup comment
+   * @param soupId
+   * @param commentForm
+   * @param user
+   */
+  async createComment(soupId: number, commentForm: CommentForm, user) {
+    return await this.commentsService.create({
+      commentForm,
+      commentType: Soup.commentType,
+      commentTypeId: soupId,
+      user,
+    });
   }
 }
