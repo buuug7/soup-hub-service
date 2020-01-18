@@ -46,4 +46,16 @@ export class SoupsController {
   async list() {
     return this.soupsService.list();
   }
+
+  @Post('star/:id')
+  @UseGuards(AuthGuard('jwt'))
+  async star() {
+    return this.soupsService.star();
+  }
+
+  @Post('unStar/:id')
+  @UseGuards(AuthGuard('jwt'))
+  async unStar() {
+    return this.soupsService.unStar();
+  }
 }

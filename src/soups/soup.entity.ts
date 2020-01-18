@@ -13,6 +13,7 @@ import {
 // import { Comment } from './Comment';
 import { PaginationParam, simplePagination } from '../common/pagination';
 import { User } from '../users/user.entity';
+import { from } from 'rxjs';
 
 @Entity({
   orderBy: {
@@ -61,70 +62,75 @@ export class Soup extends BaseEntity {
   })
   user: User;
 
-  @ManyToMany(type => User, user => user.starSoups)
-  starUsers: User;
+  @ManyToMany(type => User, user => user.starSoups, {
+    cascade: true,
+  })
+  starUsers: User[];
 
   /**
    * star the soup with given user
    * @param user
    */
-  // public star(user: User) {
-  //   return createQueryBuilder()
-  //     .insert()
-  //     .into(UserSoupStar)
-  //     .values([
-  //       {
-  //         userId: user.id,
-  //         soupId: this.id,
-  //         createdAt: new Date(),
-  //       },
-  //     ])
-  //     .execute();
-  // }
+  async star(user: User) {
+    await createQueryBuilder()
+      .insert()
+      .into('user_star_soups_soup')
+      .values([
+        {
+          userId: user.id,
+          soupId: this.id,
+        },
+      ])
+      .execute();
+  }
 
   /**
    * unStar the soup with given user
    * @param user
    */
-  // public async unStar(user: User) {
-  //   const userSoupStar = await UserSoupStar.findOne({
-  //     userId: user.id,
-  //     soupId: this.id,
-  //   });
-  //
-  //   if (userSoupStar) {
-  //     return userSoupStar.remove();
-  //   }
-  // }
+  async unStar(user: User) {
+    return await createQueryBuilder()
+      .delete()
+      .from('user_star_soups_soup')
+      .where('userId = :userId AND soupId = :soupId', {
+        userId: user.id,
+        soupId: this.id,
+      })
+      .execute();
+  }
 
   /**
-   * determine the soup is star by give user
+   * determine the soup whether is stared by give user
    * @param user
    */
-  // async isStarByGivenUser(user: User): Promise<boolean> {
-  //   const count = await createQueryBuilder(UserSoupStar, 'UserSoupStar')
-  //     .where(
-  //       'UserSoupStar.userId = :userId AND UserSoupStar.soupId = :soupId',
-  //       {
-  //         userId: user.id,
-  //         soupId: this.id,
-  //       },
-  //     )
-  //     .getCount();
-  //
-  //   return count > 0;
-  // }
+  async isStarByGivenUser(user: User): Promise<boolean> {
+    const count = await createQueryBuilder()
+      .select()
+      .from('user_star_soups_soup', 'UserStarSoup')
+      .where(
+        'UserStarSoup.userId = :userId AND UserStarSoup.soupId = :soupId',
+        {
+          userId: user.id,
+          soupId: this.id,
+        },
+      )
+      .getCount();
+
+    return count > 0;
+  }
 
   /**
-   * return the star count number of the soup
+   * return the star count of the soup
    */
-  // async starCount(): Promise<number> {
-  //   return await createQueryBuilder(UserSoupStar, 'UserSoupStar')
-  //     .where('UserSoupStar.soupId = :soupId', {
-  //       soupId: this.id,
-  //     })
-  //     .getCount();
-  // }
+  async starCount(): Promise<number> {
+    return await createQueryBuilder()
+      .select()
+      .from('user_star_soups_soup', 'UserStarSoup')
+      .where('UserStarSoup.soupId = :soupId', {
+        soupId: this.id,
+      })
+      .getCount();
+  }
 
   /**
    * create comment on the soup

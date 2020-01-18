@@ -66,7 +66,16 @@ Authorization: Bearer {{token}}
 GET {{host}}/soups?currentPage=1&createdAt=<=&createdAt=20201020&username=buuug7&content=
 Authorization: Bearer {{token}}
 
+### star soup
+POST {{host}}/soups/star/1
+Authorization: Bearer {{token}}
+
+### unStar soup
+POST {{host}}/soups/unStar/1
+Authorization: Bearer {{token}}
+
 ###
+
 
 
 

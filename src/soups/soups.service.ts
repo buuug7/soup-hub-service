@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { Soup } from './soup.entity';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
@@ -92,5 +92,48 @@ export class SoupsService {
     }
 
     return await simplePagination(query, queryParam);
+  }
+
+  /**
+   * star soup with request soupId and user
+   * @return the star count
+   */
+  async star(): Promise<number> {
+    const soupId = this.request.params.id;
+
+    // @ts-ignore
+    const userId = this.request.user.id;
+
+    const soup = await Soup.findOneOrFail(soupId);
+    const user = await User.findOneOrFail(userId);
+
+    const isStar = await soup.isStarByGivenUser(user);
+
+    if (isStar) {
+      throw new HttpException(
+        'the resource is already star by current user',
+        HttpStatus.FORBIDDEN,
+      );
+    }
+
+    await soup.star(user);
+    return soup.starCount();
+  }
+
+  /**
+   * unStar soup with request soupId and user
+   * @return the star count
+   */
+  async unStar(): Promise<number> {
+    const soupId = this.request.params.id;
+
+    // @ts-ignore
+    const userId = this.request.user.id;
+
+    const soup = await Soup.findOneOrFail(soupId);
+    const user = await User.findOneOrFail(userId);
+
+    await soup.unStar(user);
+    return soup.starCount();
   }
 }
