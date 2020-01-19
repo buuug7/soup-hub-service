@@ -37,7 +37,7 @@ export class CommentsService {
    */
   async create({ commentForm, commentType, commentTypeId, user }) {
     const comment = Comment.create({
-      content: commentForm.content,
+      ...commentForm,
       commentType,
       commentTypeId,
       user,

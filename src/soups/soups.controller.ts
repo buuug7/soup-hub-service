@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Req,
   Res,
   UseGuards,
@@ -26,14 +27,17 @@ export class SoupsController {
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
-  async create(@Body() body: SoupForm) {
-    return this.soupsService.create(body);
+  async create(@Body() soupForm: SoupForm, @Req() req) {
+    return this.soupsService.create({
+      ...soupForm,
+      user: req.user,
+    });
   }
 
   @Put(':id')
   @UseGuards(AuthGuard('jwt'))
-  async update(@Body() body: SoupForm, @Param('id') id) {
-    return this.soupsService.update(id, body);
+  async update(@Body() soupForm: SoupForm, @Param('id') id) {
+    return this.soupsService.update(id, soupForm);
   }
 
   @Delete(':id')
@@ -43,20 +47,20 @@ export class SoupsController {
   }
 
   @Get()
-  async list() {
-    return this.soupsService.list();
+  async list(@Query() queryParam) {
+    return this.soupsService.list(queryParam);
   }
 
   @Post('star/:id')
   @UseGuards(AuthGuard('jwt'))
-  async star() {
-    return this.soupsService.star();
+  async star(@Param('id') soupId, @Req() req) {
+    return this.soupsService.star(soupId, req.user.id);
   }
 
   @Post('unStar/:id')
   @UseGuards(AuthGuard('jwt'))
-  async unStar() {
-    return this.soupsService.unStar();
+  async unStar(@Param('id') soupId, @Req() req) {
+    return this.soupsService.unStar(soupId, req.user.id);
   }
 
   @Post(':id/comment')
@@ -66,7 +70,6 @@ export class SoupsController {
     @Param('id') soupId,
     @Req() req,
   ) {
-
     console.log('commentForm=', commentForm);
     return this.soupsService.createComment(soupId, commentForm, req.user);
   }

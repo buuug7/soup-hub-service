@@ -31,7 +31,6 @@ export class SoupsService {
     return await Soup.save(
       Soup.create({
         ...data,
-        user: this.request.user,
         createdAt: new Date(),
         updatedAt: new Date(),
       }),
@@ -65,8 +64,7 @@ export class SoupsService {
   /**
    * list soup or search
    */
-  async list() {
-    const queryParam: PaginationParam = this.request.query;
+  async list(queryParam: PaginationParam) {
     console.log('query=', queryParam);
 
     const query = createQueryBuilder(Soup).leftJoinAndSelect(
@@ -103,12 +101,7 @@ export class SoupsService {
    * star soup with request soupId and user
    * @return the star count
    */
-  async star(): Promise<number> {
-    const soupId = this.request.params.id;
-
-    // @ts-ignore
-    const userId = this.request.user.id;
-
+  async star(soupId, userId): Promise<number> {
     const soup = await Soup.findOneOrFail(soupId);
     const user = await User.findOneOrFail(userId);
 
@@ -129,12 +122,7 @@ export class SoupsService {
    * unStar soup with request soupId and user
    * @return the star count
    */
-  async unStar(): Promise<number> {
-    const soupId = this.request.params.id;
-
-    // @ts-ignore
-    const userId = this.request.user.id;
-
+  async unStar(soupId, userId): Promise<number> {
     const soup = await Soup.findOneOrFail(soupId);
     const user = await User.findOneOrFail(userId);
 
