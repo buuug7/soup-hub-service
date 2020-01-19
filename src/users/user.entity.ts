@@ -58,12 +58,20 @@ export class User extends BaseEntity {
   @OneToMany(type => Soup, soup => soup.user)
   soups: Soup[];
 
-  @ManyToMany(type => Soup, soup => soup.starUsers)
-  @JoinTable()
-  starSoups: Soup[];
-
   @OneToMany(type => Comment, comment => comment.user)
   comments: Comment[];
+
+  @ManyToMany(type => Soup, soup => soup.starUsers)
+  @JoinTable({
+    name: 'user_soup_star',
+  })
+  starSoups: Soup[];
+
+  @ManyToMany(type => Comment, comment => comment.starUsers)
+  @JoinTable({
+    name: 'user_comment_star',
+  })
+  starComments: Comment[];
 
   // /**
   //  * get the soups of user already star

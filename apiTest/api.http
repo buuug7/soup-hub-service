@@ -67,15 +67,15 @@ GET {{host}}/soups?currentPage=1&createdAt=<=&createdAt=20201020&username=buuug7
 Authorization: Bearer {{token}}
 
 ### star soup
-POST {{host}}/soups/22/star
+POST {{host}}/soups/1/star
 Authorization: Bearer {{token}}
 
 ### unStar soup
-POST {{host}}/soups/22/unStar
+POST {{host}}/soups/1/unStar
 Authorization: Bearer {{token}}
 
 ### get soup star count
-GET {{host}}/soups/22/starCount
+GET {{host}}/soups/1/starCount
 
 ### get soup comments
 GET {{host}}/soups/1/comments

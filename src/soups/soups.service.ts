@@ -60,8 +60,6 @@ export class SoupsService {
    * list soup or search
    */
   async list(queryParam: PaginationParam) {
-    console.log('query=', queryParam);
-
     const query = createQueryBuilder(Soup).leftJoinAndSelect(
       'Soup.user',
       'User',
@@ -98,8 +96,8 @@ export class SoupsService {
   async starCount(soupId): Promise<number> {
     return await createQueryBuilder()
       .select()
-      .from('user_star_soups_soup', 'UserStarSoup')
-      .where('UserStarSoup.soupId = :soupId', {
+      .from('user_soup_star', 'UserSoupStar')
+      .where('UserSoupStar.soupId = :soupId', {
         soupId: soupId,
       })
       .getCount();
@@ -107,14 +105,15 @@ export class SoupsService {
 
   /**
    * determine the soup whether is stared by give user
+   * @param soupId
    * @param user
    */
   async isStarByGivenUser(soupId, user: User): Promise<boolean> {
     const count = await createQueryBuilder()
       .select()
-      .from('user_star_soups_soup', 'UserStarSoup')
+      .from('user_soup_star', 'UserSoupStar')
       .where(
-        'UserStarSoup.userId = :userId AND UserStarSoup.soupId = :soupId',
+        'UserSoupStar.userId = :userId AND UserSoupStar.soupId = :soupId',
         {
           userId: user.id,
           soupId: soupId,
@@ -143,7 +142,7 @@ export class SoupsService {
 
     await createQueryBuilder()
       .insert()
-      .into('user_star_soups_soup')
+      .into('user_soup_star')
       .values([
         {
           userId: user.id,
@@ -164,7 +163,7 @@ export class SoupsService {
 
     await createQueryBuilder()
       .delete()
-      .from('user_star_soups_soup')
+      .from('user_soup_star')
       .where('userId = :userId AND soupId = :soupId', {
         userId: user.id,
         soupId: soupId,

@@ -3,6 +3,7 @@ import {
   Column,
   Entity,
   JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -25,6 +26,9 @@ export class Comment extends BaseEntity {
   @Column()
   commentTypeId: number;
 
+  @Column()
+  createdAt: Date;
+
   // created user
   @ManyToOne(type => User, user => user.comments)
   user: User;
@@ -35,9 +39,8 @@ export class Comment extends BaseEntity {
 
   // the comments that reply this comment
   @OneToMany(type => Comment, comment => comment.targetComment)
-  @JoinTable()
   replyComments: Comment[];
 
-  @Column()
-  createdAt: Date;
+  @ManyToMany(type => User, user => user.starComments)
+  starUsers: User[];
 }

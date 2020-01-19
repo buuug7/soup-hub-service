@@ -74,7 +74,6 @@ export class SoupsController {
     @Param('id') soupId,
     @Req() req,
   ) {
-    console.log('commentForm=', commentForm);
     return this.soupsService.createComment(soupId, commentForm, req.user);
   }
 
