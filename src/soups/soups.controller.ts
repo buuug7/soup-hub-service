@@ -8,7 +8,6 @@ import {
   Put,
   Query,
   Req,
-  Res,
   UseGuards,
 } from '@nestjs/common';
 import { SoupsService } from './soups.service';
@@ -51,13 +50,13 @@ export class SoupsController {
     return this.soupsService.list(queryParam);
   }
 
-  @Post('star/:id')
+  @Post(':id/star')
   @UseGuards(AuthGuard('jwt'))
   async star(@Param('id') soupId, @Req() req) {
     return this.soupsService.star(soupId, req.user.id);
   }
 
-  @Post('unStar/:id')
+  @Post(':id/unStar')
   @UseGuards(AuthGuard('jwt'))
   async unStar(@Param('id') soupId, @Req() req) {
     return this.soupsService.unStar(soupId, req.user.id);

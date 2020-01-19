@@ -67,12 +67,18 @@ GET {{host}}/soups?currentPage=1&createdAt=<=&createdAt=20201020&username=buuug7
 Authorization: Bearer {{token}}
 
 ### star soup
-POST {{host}}/soups/star/34
+POST {{host}}/soups/22/star
 Authorization: Bearer {{token}}
 
 ### unStar soup
-POST {{host}}/soups/unStar/34
+POST {{host}}/soups/22/unStar
 Authorization: Bearer {{token}}
+
+### get soup star count
+GET {{host}}/soups/22/starCount
+
+### get soup comments
+GET {{host}}/soups/1/comments
 
 ### comment soup
 POST {{host}}/soups/1/comment
@@ -82,9 +88,6 @@ Content-Type: application/json
 {
   "content": "my first comment on soup one "
 }
-
-### get soup comments
-GET {{host}}/soups/1/comments
 
 ### reply comment
 POST {{host}}/comments/2/reply

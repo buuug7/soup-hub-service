@@ -1,7 +1,5 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { Soup } from './soup.entity';
-import { REQUEST } from '@nestjs/core';
-import { Request } from 'express';
 import { PaginationParam, simplePagination } from '../common/pagination';
 import { createQueryBuilder } from 'typeorm';
 import { User } from '../users/user.entity';
@@ -10,10 +8,7 @@ import { CommentsService } from '../comments/comments.service';
 
 @Injectable()
 export class SoupsService {
-  constructor(
-    @Inject(REQUEST) private readonly request: Request,
-    private readonly commentsService: CommentsService,
-  ) {}
+  constructor(private readonly commentsService: CommentsService) {}
 
   /**
    * Get the specified resource
