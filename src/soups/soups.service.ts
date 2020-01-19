@@ -98,14 +98,46 @@ export class SoupsService {
   }
 
   /**
+   * return the star count of the soup
+   */
+  async starCount(soupId): Promise<number> {
+    return await createQueryBuilder()
+      .select()
+      .from('user_star_soups_soup', 'UserStarSoup')
+      .where('UserStarSoup.soupId = :soupId', {
+        soupId: soupId,
+      })
+      .getCount();
+  }
+
+  /**
+   * determine the soup whether is stared by give user
+   * @param user
+   */
+  async isStarByGivenUser(soupId, user: User): Promise<boolean> {
+    const count = await createQueryBuilder()
+      .select()
+      .from('user_star_soups_soup', 'UserStarSoup')
+      .where(
+        'UserStarSoup.userId = :userId AND UserStarSoup.soupId = :soupId',
+        {
+          userId: user.id,
+          soupId: soupId,
+        },
+      )
+      .getCount();
+
+    return count > 0;
+  }
+
+  /**
    * star soup with request soupId and user
    * @return the star count
    */
   async star(soupId, userId): Promise<number> {
-    const soup = await Soup.findOneOrFail(soupId);
     const user = await User.findOneOrFail(userId);
 
-    const isStar = await soup.isStarByGivenUser(user);
+    const isStar = await this.isStarByGivenUser(soupId, user);
 
     if (isStar) {
       throw new HttpException(
@@ -114,8 +146,18 @@ export class SoupsService {
       );
     }
 
-    await soup.star(user);
-    return soup.starCount();
+    await createQueryBuilder()
+      .insert()
+      .into('user_star_soups_soup')
+      .values([
+        {
+          userId: user.id,
+          soupId: soupId,
+        },
+      ])
+      .execute();
+
+    return this.starCount(soupId);
   }
 
   /**
@@ -123,11 +165,18 @@ export class SoupsService {
    * @return the star count
    */
   async unStar(soupId, userId): Promise<number> {
-    const soup = await Soup.findOneOrFail(soupId);
     const user = await User.findOneOrFail(userId);
 
-    await soup.unStar(user);
-    return soup.starCount();
+    await createQueryBuilder()
+      .delete()
+      .from('user_star_soups_soup')
+      .where('userId = :userId AND soupId = :soupId', {
+        userId: user.id,
+        soupId: soupId,
+      })
+      .execute();
+
+    return this.starCount(soupId);
   }
 
   /**
@@ -143,5 +192,18 @@ export class SoupsService {
       commentTypeId: soupId,
       user,
     });
+  }
+
+  /**
+   * get soup comments
+   * @param soupId
+   * @param queryParam
+   */
+  async getComments(soupId, queryParam) {
+    return await this.commentsService.getCommentsByTypeAndTypeId(
+      Soup.commentType,
+      soupId,
+      queryParam,
+    );
   }
 }

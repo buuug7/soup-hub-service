@@ -83,6 +83,9 @@ Content-Type: application/json
   "content": "my first comment on soup one "
 }
 
+### get soup comments
+GET {{host}}/soups/1/comments
+
 ### reply comment
 POST {{host}}/comments/2/reply
 Authorization: Bearer {{token}}

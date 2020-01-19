@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Comment } from './comment.entity';
 import { CommentForm } from './comments.interface';
+import { createQueryBuilder } from 'typeorm';
+import { PaginationParam, simplePagination } from '../common/pagination';
 
 @Injectable()
 export class CommentsService {
@@ -46,5 +48,28 @@ export class CommentsService {
     });
 
     return comment.save();
+  }
+
+  /**
+   * get comments by commentType and commentTypeId
+   * @param commentType
+   * @param commentTypeId
+   * @param paginationParam
+   */
+  async getCommentsByTypeAndTypeId(
+    commentType,
+    commentTypeId,
+    paginationParam: PaginationParam,
+  ) {
+    const query = createQueryBuilder(Comment, 'Comment')
+      .leftJoinAndSelect('Comment.user', 'User')
+      .where(
+        'Comment.commentType = :commentType AND Comment.CommentTypeId = :commentTypeId',
+        {
+          commentType: commentType,
+          commentTypeId: commentTypeId,
+        },
+      );
+    return simplePagination(query, paginationParam);
   }
 }

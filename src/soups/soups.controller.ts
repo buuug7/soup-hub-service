@@ -63,6 +63,11 @@ export class SoupsController {
     return this.soupsService.unStar(soupId, req.user.id);
   }
 
+  @Get(':id/starCount')
+  async starCount(@Param('id') soupId) {
+    return this.soupsService.starCount(soupId);
+  }
+
   @Post(':id/comment')
   @UseGuards(AuthGuard('jwt'))
   createComment(
@@ -72,5 +77,10 @@ export class SoupsController {
   ) {
     console.log('commentForm=', commentForm);
     return this.soupsService.createComment(soupId, commentForm, req.user);
+  }
+
+  @Get(':id/comments')
+  async getComments(@Param('id') soupId, @Query() queryParam) {
+    return this.soupsService.getComments(soupId, queryParam);
   }
 }
