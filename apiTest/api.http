@@ -80,7 +80,7 @@ GET {{host}}/soups/1/starCount
 ### get soup comments
 GET {{host}}/soups/1/comments
 
-### comment soup
+### comment on soup
 POST {{host}}/soups/1/comment
 Authorization: Bearer {{token}}
 Content-Type: application/json
@@ -90,7 +90,7 @@ Content-Type: application/json
 }
 
 ### reply comment
-POST {{host}}/comments/2/reply
+POST {{host}}/comments/1/reply
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -98,5 +98,25 @@ Content-Type: application/json
   "content": "I reply the first comment"
 }
 
+### star comment
+POST {{host}}/comments/1/star
+Authorization: Bearer {{token}}
+
+### unStar comment
+POST {{host}}/comments/1/unStar
+Authorization: Bearer {{token}}
+
+### get comment star count
+GET {{host}}/comments/1/starCount
+
+### get comment star users
+GET {{host}}/comments/1/starUsers
+
+### get one comment
+GET {{host}}/comments/1
+
 ###
+
+
+
 

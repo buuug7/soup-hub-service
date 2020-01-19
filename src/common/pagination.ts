@@ -1,4 +1,5 @@
 import { BaseEntity, SelectQueryBuilder } from 'typeorm';
+import { pagination } from '../app.constants';
 
 export interface PaginationParam {
   perPage?: number;
@@ -10,7 +11,7 @@ export async function simplePagination(
   selectQueryBuilder: SelectQueryBuilder<BaseEntity>,
   param: PaginationParam,
 ) {
-  let { perPage = 5, currentPage = 1 } = param;
+  let { perPage = pagination.perPage, currentPage = 1 } = param;
 
   const total = await selectQueryBuilder.getCount();
 

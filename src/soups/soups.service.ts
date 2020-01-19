@@ -106,16 +106,16 @@ export class SoupsService {
   /**
    * determine the soup whether is stared by give user
    * @param soupId
-   * @param user
+   * @param userId
    */
-  async isStarByGivenUser(soupId, user: User): Promise<boolean> {
+  async isStarByGivenUser(soupId, userId): Promise<boolean> {
     const count = await createQueryBuilder()
       .select()
       .from('user_soup_star', 'UserSoupStar')
       .where(
         'UserSoupStar.userId = :userId AND UserSoupStar.soupId = :soupId',
         {
-          userId: user.id,
+          userId: userId,
           soupId: soupId,
         },
       )
@@ -126,12 +126,12 @@ export class SoupsService {
 
   /**
    * star soup with request soupId and user
+   * @param soupId
+   * @param userId
    * @return the star count
    */
   async star(soupId, userId): Promise<number> {
-    const user = await User.findOneOrFail(userId);
-
-    const isStar = await this.isStarByGivenUser(soupId, user);
+    const isStar = await this.isStarByGivenUser(soupId, userId);
 
     if (isStar) {
       throw new HttpException(
@@ -145,7 +145,7 @@ export class SoupsService {
       .into('user_soup_star')
       .values([
         {
-          userId: user.id,
+          userId: userId,
           soupId: soupId,
         },
       ])
@@ -156,16 +156,16 @@ export class SoupsService {
 
   /**
    * unStar soup with request soupId and user
+   * @param soupId
+   * @param userId
    * @return the star count
    */
   async unStar(soupId, userId): Promise<number> {
-    const user = await User.findOneOrFail(userId);
-
     await createQueryBuilder()
       .delete()
       .from('user_soup_star')
       .where('userId = :userId AND soupId = :soupId', {
-        userId: user.id,
+        userId: userId,
         soupId: soupId,
       })
       .execute();

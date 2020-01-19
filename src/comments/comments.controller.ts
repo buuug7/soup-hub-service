@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -29,5 +30,27 @@ export class CommentsController {
   ) {
     console.log('req=', req.user);
     return this.commentsService.reply(targetCommentId, commentForm, req.user);
+  }
+
+  @Post(':id/star')
+  @UseGuards(AuthGuard('jwt'))
+  async star(@Param('id') commentId, @Req() req) {
+    return this.commentsService.star(commentId, req.user.id);
+  }
+
+  @Post(':id/unStar')
+  @UseGuards(AuthGuard('jwt'))
+  async unStar(@Param('id') commentId, @Req() req) {
+    return this.commentsService.unStar(commentId, req.user.id);
+  }
+
+  @Get(':id/starCount')
+  async starCount(@Param('id') commentId) {
+    return this.commentsService.starCount(commentId);
+  }
+
+  @Get(':id/starUsers')
+  async starUsers(@Param('id') commentId, @Query() queryParam) {
+    return this.commentsService.starUsers(commentId, queryParam);
   }
 }

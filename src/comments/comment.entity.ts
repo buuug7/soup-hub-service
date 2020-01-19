@@ -2,11 +2,13 @@ import {
   BaseEntity,
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  Tree,
 } from 'typeorm';
 import { User } from '../users/user.entity';
 
@@ -30,16 +32,18 @@ export class Comment extends BaseEntity {
   createdAt: Date;
 
   // created user
-  @ManyToOne(type => User, user => user.comments)
+  @ManyToOne(type => User, user => user.comments, {
+    eager: true,
+  })
   user: User;
 
-  // the comment that this comment reply
-  @ManyToOne(type => Comment, comment => comment.replyComments)
-  targetComment: Comment;
+  // the comment that this comment reply to
+  @ManyToOne(type => Comment, comment => comment.children)
+  parent: Comment;
 
   // the comments that reply this comment
-  @OneToMany(type => Comment, comment => comment.targetComment)
-  replyComments: Comment[];
+  @OneToMany(type => Comment, comment => comment.parent)
+  children: Comment[];
 
   @ManyToMany(type => User, user => user.starComments)
   starUsers: User[];
