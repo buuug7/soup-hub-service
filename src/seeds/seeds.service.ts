@@ -10,12 +10,18 @@ export class SeedsService {
   async seedUsers() {
     const users = [
       {
-        name: 'buuug7',
+        name: 'Buuug7',
         email: 'youpp@126.com',
         password: hashSync('111111', 3),
         createdAt: new Date(),
       },
-    ].concat(SeedsService.generateUser(1));
+      {
+        name: 'Tom',
+        email: 'tom@gmail.com',
+        password: hashSync('111111', 3),
+        createdAt: new Date(),
+      },
+    ].concat(SeedsService.generateUser(8));
 
     return createQueryBuilder()
       .insert()

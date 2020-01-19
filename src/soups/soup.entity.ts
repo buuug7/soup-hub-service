@@ -64,5 +64,4 @@ export class Soup extends BaseEntity {
     cascade: true,
   })
   starUsers: User[];
-
 }

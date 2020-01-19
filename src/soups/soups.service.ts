@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { Soup } from './soup.entity';
 import { PaginationParam, simplePagination } from '../common/pagination';
-import { createQueryBuilder } from 'typeorm';
+import { createQueryBuilder, getManager } from 'typeorm';
 import { User } from '../users/user.entity';
 import { CommentForm } from '../comments/comments.interface';
 import { CommentsService } from '../comments/comments.service';
@@ -60,10 +60,15 @@ export class SoupsService {
    * list soup or search
    */
   async list(queryParam: PaginationParam) {
-    const query = createQueryBuilder(Soup).leftJoinAndSelect(
-      'Soup.user',
-      'User',
-    );
+    // TODO: add starCount
+    const query = createQueryBuilder(Soup)
+      .addSelect(qb => {
+        return qb
+          .select('count(*)')
+          .from('user_soup_star', 'UserSoupStar')
+          .where('UserSoupStar.soupId = Soup.id');
+      }, 'myCount')
+      .leftJoinAndSelect('Soup.user', 'User');
 
     if (queryParam.content) {
       query.andWhere('Soup.content like :content', {
