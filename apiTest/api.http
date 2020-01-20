@@ -18,11 +18,11 @@ GET {{host}}/seeds/users
 GET {{host}}/seeds/soups
 
 
-###
+### show my profile
 GET {{host}}/users/profile
 Authorization: Bearer {{token}}
 
-###
+### create user
 POST {{host}}/users
 Content-Type: application/json
 
@@ -31,6 +31,12 @@ Content-Type: application/json
   "email": "test@qq.com",
   "password": "test"
 }
+
+### get user star soups
+GET {{host}}/users/2/starSoups
+
+### get user star comments
+GET {{host}}/users/2/starComments
 
 ### get soup by id
 GET {{host}}/soups/26
