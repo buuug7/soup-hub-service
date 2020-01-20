@@ -37,3 +37,15 @@ example for photos resource router defined as below
 ```
 
 ## default user `master@dev.com` only for test
+
+## other
+
++ vultr server
+    + ip 167.179.101.39
+    + ftp
+        + ftp1/fuckftp1
+        + ftp://167.179.101.39
+    + mysql
+        + root/123456789
+        + buuug7/123456789
+        + jdbc:mysql://167.179.101.39:3306/soup_hub   

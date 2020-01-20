@@ -1,6 +1,6 @@
 # soup hub service
 
-An application where collect and share awesome soups. this repository is the service/backend of the soup hub. use node [nest](https://github.com/nestjs/nest) as framework
+An application where collect and share awesome soups. this repository is the service/backend of the soup hub. use node [nest](https://github.com/nestjs/nest) framework
 
 ## usage
 
