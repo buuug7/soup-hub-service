@@ -2,13 +2,10 @@ import {
   BaseEntity,
   Column,
   Entity,
-  JoinColumn,
-  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  Tree,
 } from 'typeorm';
 import { User } from '../users/user.entity';
 

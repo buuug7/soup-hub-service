@@ -32,6 +32,7 @@ export class UsersService {
   /**
    * get star soups by userId
    * @param userId
+   * @param queryParam
    */
   async getStarSoups(userId: number, queryParam: PaginationParam) {
     const query = createQueryBuilder(Soup)
@@ -51,6 +52,7 @@ export class UsersService {
   /**
    * get star comments by userId
    * @param userId
+   * @param queryParam
    */
   async getStarComments(userId: number, queryParam: PaginationParam) {
     const query = createQueryBuilder(Comment)

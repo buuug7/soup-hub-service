@@ -4,18 +4,11 @@ import {
   Column,
   OneToMany,
   BaseEntity,
-  createQueryBuilder,
   ManyToMany,
   JoinTable,
 } from 'typeorm';
 import { Soup } from '../soups/soup.entity';
 import { Comment } from '../comments/comment.entity';
-
-// import { Soup } from '../Soup';
-// import { UserSoupStar } from './UserSoupStar';
-// import { PaginationParam, simplePagination } from '../common/pagination';
-// import { Comment } from './Comment';
-// import { UserCommentStar } from './UserCommentStar';
 
 @Entity()
 export class User extends BaseEntity {
@@ -72,37 +65,4 @@ export class User extends BaseEntity {
     name: 'user_comment_star',
   })
   starComments: Comment[];
-
-  // /**
-  //  * get the soups of user already star
-  //  */
-  // public starSoups(paginationParam: PaginationParam) {
-  //   const query = createQueryBuilder(Soup)
-  //     .leftJoinAndSelect('Soup.user', 'User')
-  //     .innerJoinAndSelect(
-  //       UserSoupStar,
-  //       'UserSoupStar',
-  //       'UserSoupStar.soupId = Soup.id',
-  //     )
-  //     .where('UserSoupStar.userId = :userId', { userId: this.id });
-  //
-  //   return simplePagination(query, paginationParam);
-  // }
-  //
-  // /**
-  //  * get comments of specified user stared
-  //  * @param paginationParam
-  //  */
-  // public starComments(paginationParam: PaginationParam) {
-  //   const query = createQueryBuilder(Comment)
-  //     .leftJoinAndSelect('Comment.user', 'User')
-  //     .innerJoinAndSelect(
-  //       UserCommentStar,
-  //       'UserCommentStar',
-  //       'UserCommentStar.commentId = Comment.id',
-  //     )
-  //     .where('UserCommentStar.userId = :userId', { userId: this.id });
-  //
-  //   return simplePagination(query, paginationParam);
-  // }
 }

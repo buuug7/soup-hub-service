@@ -1,17 +1,12 @@
 import {
   BaseEntity,
   Column,
-  createQueryBuilder,
   Entity,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-// import { UserSoupStar } from './UserSoupStar';
-// import { Comment } from './Comment';
-import { PaginationParam, simplePagination } from '../common/pagination';
 import { User } from '../users/user.entity';
-import { from } from 'rxjs';
 
 @Entity({
   orderBy: {

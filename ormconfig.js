@@ -1,9 +1,9 @@
 module.exports =   {
   name: 'default',
   type: 'mysql',
-  host: 'localhost',
+  host: '167.179.101.39',
   port: 3306,
-  username: 'root',
+  username: 'buuug7',
   password: '123456789',
   database: 'soup_hub',
   synchronize: true,
