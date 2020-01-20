@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from './users.service';
 import { UserCreate } from './users.interface';
@@ -18,7 +27,17 @@ export class UserController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('profile')
-  getProfile(@Req() req) {
+  async getProfile(@Req() req) {
     return req.user;
+  }
+
+  @Get(':id/starSoups')
+  async getStarSoups(@Param('id') userId, @Query() queryParam) {
+    return this.userService.getStarSoups(userId, queryParam);
+  }
+
+  @Get(':id/starComments')
+  async getStarComments(@Param('id') userId, @Query() queryParam) {
+    return this.userService.getStarComments(userId, queryParam);
   }
 }

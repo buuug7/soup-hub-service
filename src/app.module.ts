@@ -9,7 +9,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SoupsModule } from './soups/soups.module';
 import { SeedsModule } from './seeds/seeds.module';
-import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [

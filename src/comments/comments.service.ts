@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Comment } from './comment.entity';
 import { CommentForm } from './comments.interface';
-import { createQueryBuilder, getManager } from 'typeorm';
+import { createQueryBuilder } from 'typeorm';
 import { PaginationParam, simplePagination } from '../common/pagination';
 import { User } from '../users/user.entity';
 
