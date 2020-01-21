@@ -38,7 +38,7 @@ GET {{host}}/users/2/starSoups
 GET {{host}}/users/2/starComments
 
 ### get soup by id
-GET {{host}}/soups/26
+GET {{host}}/soups/1
 
 ### create soup
 POST {{host}}/soups

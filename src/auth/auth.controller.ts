@@ -15,11 +15,31 @@ import { githubAuthConfig } from '../app.constants';
 import { User } from '../users/user.entity';
 import { hashSync } from 'bcrypt';
 import { randomStr } from '../common/util';
+import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { CreateUserDto } from '../users/create-user.dto';
 
+export interface LoginForm {
+  email: string;
+  password: string;
+}
+
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @ApiBody({
+    schema: {
+      properties: {
+        email: {
+          type: 'string',
+        },
+        password: {
+          type: 'string',
+        },
+      },
+    },
+  })
   @Post('login')
   @UseGuards(AuthGuard('local'))
   async login(@Request() req) {
@@ -40,6 +60,11 @@ export class AuthController {
    * and then login
    * @param code
    */
+  @ApiParam({
+    type: String,
+    name: 'code',
+    description: 'github code',
+  })
   @Post('login/github/:code')
   async githubAuthCallback(@Param('code') code) {
     const token = await this.authService.getGithubAccessTokenByCode(code);

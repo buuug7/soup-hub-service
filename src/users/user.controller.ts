@@ -10,8 +10,10 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from './users.service';
-import { UserCreate } from './users.interface';
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { CreateUserDto } from './create-user.dto';
 
+@ApiTags('users')
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UsersService) {}
@@ -19,23 +21,33 @@ export class UserController {
   @Post()
   async create(
     @Body()
-    body: UserCreate,
+    body: CreateUserDto,
   ) {
-    console.log('body=', body);
     return this.userService.create(body);
   }
 
+  @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
   @Get('profile')
   async getProfile(@Req() req) {
     return req.user;
   }
 
+  @ApiParam({
+    name: 'id',
+    type: String,
+    description: 'user id',
+  })
   @Get(':id/starSoups')
   async getStarSoups(@Param('id') userId, @Query() queryParam) {
     return this.userService.getStarSoups(userId, queryParam);
   }
 
+  @ApiParam({
+    name: 'id',
+    type: String,
+    description: 'user id',
+  })
   @Get(':id/starComments')
   async getStarComments(@Param('id') userId, @Query() queryParam) {
     return this.userService.getStarComments(userId, queryParam);

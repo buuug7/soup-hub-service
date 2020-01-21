@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 import { hashSync } from 'bcrypt';
-import { UserCreate } from './users.interface';
 import { createQueryBuilder } from 'typeorm';
 import { Soup } from '../soups/soup.entity';
 import { PaginationParam, simplePagination } from '../common/pagination';
 import { Comment } from '../comments/comment.entity';
+import { CreateUserDto } from './create-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -19,7 +19,7 @@ export class UsersService {
       .getOne();
   }
 
-  async create(user: UserCreate) {
+  async create(user: CreateUserDto) {
     return await User.save(
       User.create({
         ...user,

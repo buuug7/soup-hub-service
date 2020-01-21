@@ -11,7 +11,9 @@ import {
 import { CommentsService } from './comments.service';
 import { CommentForm } from './comments.interface';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('comments')
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
