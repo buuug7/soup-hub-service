@@ -1,8 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { HttpService, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
-import fetch from 'node-fetch';
+import { compareSync } from 'bcrypt';
 import { githubAuthConfig } from '../app.constants';
 
 @Injectable()
@@ -10,12 +9,13 @@ export class AuthService {
   constructor(
     private readonly userService: UsersService,
     private readonly jwtService: JwtService,
+    private readonly httpService: HttpService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.userService.findOne(email);
 
-    if (user && bcrypt.compareSync(password, user.password)) {
+    if (user && compareSync(password, user.password)) {
       console.log('user=', user);
       return user;
     }
@@ -39,21 +39,24 @@ export class AuthService {
    */
   async getGithubAccessTokenByCode(code: string) {
     const getAccessTokenUrl = 'https://github.com/login/oauth/access_token';
-    const response = await fetch(getAccessTokenUrl, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        client_id: githubAuthConfig.client_id,
-        client_secret: githubAuthConfig.client_secret,
-        code: code,
-      }),
-    });
+    const rs = await this.httpService
+      .post(
+        getAccessTokenUrl,
+        JSON.stringify({
+          client_id: githubAuthConfig.client_id,
+          client_secret: githubAuthConfig.client_secret,
+          code: code,
+        }),
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      .toPromise();
 
-    const json = await response.json();
-    return json.access_token;
+    return rs.data.access_token;
   }
 
   /**
@@ -61,7 +64,10 @@ export class AuthService {
    * @param token
    */
   async getGithubUserInfoByToken(token: string) {
-    const githubUser: any = await fetch(githubAuthConfig.user_info_url + token);
-    return await githubUser.json();
+    const rs = await this.httpService
+      .get(githubAuthConfig.user_info_url + token)
+      .toPromise();
+
+    return await rs.data;
   }
 }

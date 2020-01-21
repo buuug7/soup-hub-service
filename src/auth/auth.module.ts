@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { HttpModule, Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersModule } from '../users/users.module';
 import { LocalStrategy } from './local.strategy';
@@ -17,6 +17,7 @@ import { jwtConstants } from '../app.constants';
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '60s' },
     }),
+    HttpModule,
     UsersModule,
   ],
   controllers: [AuthController],
