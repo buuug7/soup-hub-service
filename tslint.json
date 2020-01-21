@@ -15,7 +15,8 @@
     "object-literal-sort-keys": false,
     "no-console": false,
     "no-unused-variable": false,
-    "object-literal-shorthand": false
+    "object-literal-shorthand": false,
+    "object-literal-key-quotes": false
   },
   "rulesDirectory": []
 }
