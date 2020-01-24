@@ -26,11 +26,11 @@ export class UserController {
     return this.userService.create(body);
   }
 
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard('jwt'))
   @Get('profile')
-  async getProfile(@Req() req) {
-    return req.user;
+  @UseGuards(AuthGuard('jwt'))
+  async getUser(@Req() req) {
+    console.log('req=', req.user);
+    return this.userService.findOne(req.user.email);
   }
 
   @ApiParam({

@@ -12,8 +12,14 @@ export class SeedsController {
     return await this.seedsService.seedUsers();
   }
 
-  @Get('soups')
-  async seedSoups() {
-    return await this.seedsService.seedSoups();
+  //
+  // @Get('soups')
+  // async seedSoups() {
+  //   return await this.seedsService.seedSoups();
+  // }
+
+  @Get('seed')
+  async seed() {
+    return await this.seedsService.seeds();
   }
 }

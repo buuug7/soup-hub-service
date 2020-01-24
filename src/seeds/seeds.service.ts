@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '../users/user.entity';
-import { createQueryBuilder } from 'typeorm';
+import { createQueryBuilder, getConnection } from 'typeorm';
 import { hashSync } from 'bcrypt';
 import * as faker from 'faker';
 import { Soup } from '../soups/soup.entity';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class SeedsService {
@@ -44,11 +45,17 @@ export class SeedsService {
   }
 
   async seedSoups() {
-    return createQueryBuilder()
+    const rs = await createQueryBuilder()
       .insert()
       .into(Soup)
       .values(SeedsService.generateSoups(5))
       .execute();
+
+    console.log('rs=', rs);
+
+    const ids = rs.identifiers.map(item => item.id);
+
+    return ids;
   }
 
   static generateSoups(num) {
@@ -62,5 +69,24 @@ export class SeedsService {
     }
 
     return soups;
+  }
+
+  async seeds() {
+    const fakeDate = () =>
+      dayjs(faker.date.past()).format('YYYY-MM-DD HH:mm:ss');
+
+    let query = `insert into soup(content, more, createdAt, userId) values `;
+
+    query += `('${faker.lorem.paragraphs()}', '{}', '${fakeDate()}', 1),`;
+    query += `('${faker.lorem.paragraphs()}', '{}', '${fakeDate()}', 1),`;
+    query += `('${faker.lorem.paragraphs()}', '{}', '${fakeDate()}', 1),`;
+    query += `('${faker.lorem.paragraphs()}', '{}', '${fakeDate()}', 1),`;
+    query += `('${faker.lorem.paragraphs()}', '{}', '${fakeDate()}', 1),`;
+    query += `('${faker.lorem.paragraphs()}', '{}', '${fakeDate()}', 1),`;
+    query += `('${faker.lorem.paragraphs()}', '{}', '${fakeDate()}', 1)`;
+
+    console.log('query=', query);
+
+    return await getConnection().query(query);
   }
 }
