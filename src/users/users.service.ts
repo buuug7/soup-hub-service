@@ -10,13 +10,11 @@ import { CreateUserDto } from './create-user.dto';
 @Injectable()
 export class UsersService {
   async findOne(email: string): Promise<User | undefined> {
-    return User.createQueryBuilder('User')
-      .select()
-      .addSelect('User.password')
-      .where('User.email = :email', {
-        email,
-      })
-      .getOne();
+    return await User.findOne({
+      where: {
+        email: email,
+      },
+    });
   }
 
   async create(user: CreateUserDto) {

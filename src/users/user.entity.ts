@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { Soup } from '../soups/soup.entity';
 import { Comment } from '../comments/comment.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User extends BaseEntity {
@@ -21,9 +22,8 @@ export class User extends BaseEntity {
   @Column()
   email: string;
 
-  @Column({
-    select: false,
-  })
+  @Column()
+  @Exclude()
   password: string;
 
   @Column({
