@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Query,
   Req,
   UseGuards,
@@ -24,6 +25,16 @@ export class UserController {
     body: CreateUserDto,
   ) {
     return this.userService.create(body);
+  }
+
+  @Put()
+  @UseGuards(AuthGuard('jwt'))
+  async update(
+    @Body()
+    body: CreateUserDto,
+    @Req() req,
+  ) {
+    return this.userService.update(req.user.id, body);
   }
 
   @Get('profile')

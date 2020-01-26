@@ -27,6 +27,12 @@ export class UsersService {
     );
   }
 
+  async update(userId: number, data: CreateUserDto) {
+    const user = await User.findOne(userId);
+    user.name = data.name;
+    return await User.save(user);
+  }
+
   /**
    * get star soups by userId
    * @param userId

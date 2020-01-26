@@ -4,7 +4,7 @@ POST {{host}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "tom@gmail.com",
+  "email": "youpp@126.com",
   "password": "111111"
 }
 
@@ -27,6 +27,14 @@ Content-Type: application/json
   "name": "test",
   "email": "test@qq.com",
   "password": "test"
+}
+
+### update user
+PUT {{host}}/users
+Content-Type: application/json
+Authorization: Bearer {{token}}
+{
+  "name": "fuck22"
 }
 
 ### get user
