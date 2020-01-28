@@ -86,6 +86,12 @@ export class SoupsController {
     return this.soupsService.unStar(soupId, req.user.id);
   }
 
+  @Post(':id/toggleStar')
+  @UseGuards(AuthGuard('jwt'))
+  async toggleStar(@Param('id') soupId, @Req() req) {
+    return this.soupsService.toggleStar(soupId, req.user.id);
+  }
+
   @ApiParam({
     type: String,
     name: 'id',
@@ -93,6 +99,14 @@ export class SoupsController {
   @Get(':id/starCount')
   async starCount(@Param('id') soupId) {
     return this.soupsService.starCount(soupId);
+  }
+
+  @Get(':id/isStarByRequestUser')
+  @UseGuards(AuthGuard('jwt'))
+  async isStarByRequestUser(@Req() req, @Param('id') soupId) {
+    const userId = req.user.id;
+    console.log('isStarByRequestUser=', req.user);
+    return this.soupsService.isStarByUser(soupId, userId);
   }
 
   @ApiParam({

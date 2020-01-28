@@ -92,6 +92,10 @@ Authorization: Bearer {{token}}
 ### get soup star count
 GET {{host}}/soups/1/starCount
 
+### is star by request user
+GET {{host}}/soups/1/isStarByRequestUser
+Authorization: Bearer {{token}}
+
 ### get soup comments
 GET {{host}}/soups/1/comments
 

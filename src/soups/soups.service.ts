@@ -113,7 +113,7 @@ export class SoupsService {
    * @param soupId
    * @param userId
    */
-  async isStarByGivenUser(soupId, userId): Promise<boolean> {
+  async isStarByUser(soupId, userId): Promise<boolean> {
     const count = await createQueryBuilder()
       .select()
       .from('user_soup_star', 'UserSoupStar')
@@ -136,7 +136,7 @@ export class SoupsService {
    * @return the star count
    */
   async star(soupId, userId): Promise<number> {
-    const isStar = await this.isStarByGivenUser(soupId, userId);
+    const isStar = await this.isStarByUser(soupId, userId);
 
     if (isStar) {
       throw new HttpException(
@@ -176,6 +176,22 @@ export class SoupsService {
       .execute();
 
     return this.starCount(soupId);
+  }
+
+  /**
+   * toggle star
+   * if already star and unStar, otherwise star
+   * @param soupId
+   * @param userId
+   */
+  async toggleStar(soupId, userId): Promise<number> {
+    const isStar = await this.isStarByUser(soupId, userId);
+
+    isStar
+      ? await this.unStar(soupId, userId)
+      : await this.star(soupId, userId);
+
+    return await this.starCount(soupId);
   }
 
   /**
