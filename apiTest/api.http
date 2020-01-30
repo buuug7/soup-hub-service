@@ -42,7 +42,7 @@ GET {{host}}/users/profile
 Authorization: Bearer {{token}}
 
 ### get user create soups
-GET {{host}}/users/1/createSoups
+GET {{host}}/users/1/createdSoups
 
 ### get user star soups
 GET {{host}}/users/2/starSoups

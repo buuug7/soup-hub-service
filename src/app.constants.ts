@@ -2,10 +2,6 @@ export const jwtConstants = {
   secret: 'secretKey',
 };
 
-export const pagination = {
-  perPage: 10,
-};
-
 export const githubAuthConfig = {
   client_id: '0f3084d998f318ee4289',
   client_secret: 'ca5d9f5509b4388c8fb6c36bfdb7376b157505da',

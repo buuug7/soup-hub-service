@@ -33,7 +33,7 @@ export class UsersService {
     return await User.save(user);
   }
 
-  async getCreateSoups(userId: number, queryParam: PaginationParam) {
+  async getCreatedSoups(userId: number, queryParam: PaginationParam) {
     const query = createQueryBuilder(Soup)
       .leftJoinAndSelect('Soup.user', 'User', 'Soup.userId = User.id')
       .where('Soup.userId = :userId', { userId });
