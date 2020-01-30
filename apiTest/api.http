@@ -41,6 +41,9 @@ Authorization: Bearer {{token}}
 GET {{host}}/users/profile
 Authorization: Bearer {{token}}
 
+### get user create soups
+GET {{host}}/users/1/createSoups
+
 ### get user star soups
 GET {{host}}/users/2/starSoups
 
@@ -99,13 +102,16 @@ Authorization: Bearer {{token}}
 ### get soup comments
 GET {{host}}/soups/1/comments
 
+### get soup comments count
+GET {{host}}/soups/1/comments/count
+
 ### comment on soup
 POST {{host}}/soups/1/comment
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "content": "my first comment on soup one "
+  "content": "As shown above, use the configService.get() method to get a simple environment variable by passing the variable name. You can do TypeScript type hinting by passing the type"
 }
 
 ### reply comment

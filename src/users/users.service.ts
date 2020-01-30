@@ -33,6 +33,14 @@ export class UsersService {
     return await User.save(user);
   }
 
+  async getCreateSoups(userId: number, queryParam: PaginationParam) {
+    const query = createQueryBuilder(Soup)
+      .leftJoinAndSelect('Soup.user', 'User', 'Soup.userId = User.id')
+      .where('Soup.userId = :userId', { userId });
+
+    return simplePagination(query, queryParam);
+  }
+
   /**
    * get star soups by userId
    * @param userId

@@ -43,6 +43,11 @@ export class UserController {
     return this.userService.findOne(req.user.email);
   }
 
+  @Get(':id/createSoups')
+  async getCreateSoups(@Param('id') userId, @Query() queryParam) {
+    return this.userService.getCreateSoups(userId, queryParam);
+  }
+
   @ApiParam({
     name: 'id',
     type: String,

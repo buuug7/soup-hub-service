@@ -221,4 +221,11 @@ export class SoupsService {
       queryParam,
     );
   }
+
+  async getCommentsCountBySoupId(soupId) {
+    return await this.commentsService.getCommentsCountByCommentTypeAndCommentTypeId(
+      Soup.commentType,
+      soupId,
+    );
+  }
 }

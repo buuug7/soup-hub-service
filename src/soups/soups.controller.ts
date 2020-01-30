@@ -139,4 +139,9 @@ export class SoupsController {
   async getComments(@Param('id') soupId, @Query() queryParam) {
     return this.soupsService.getComments(soupId, queryParam);
   }
+
+  @Get(':id/comments/count')
+  async getCommentsCountBySoupId(@Param('id') soupId) {
+    return await this.soupsService.getCommentsCountBySoupId(soupId);
+  }
 }

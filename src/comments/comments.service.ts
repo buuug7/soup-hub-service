@@ -178,4 +178,19 @@ export class CommentsService {
 
     return simplePagination(query, paginationParam);
   }
+
+  async getCommentsCountByCommentTypeAndCommentTypeId(
+    commentType: string,
+    commentTypeId: number,
+  ) {
+    return await createQueryBuilder(Comment, 'Comment')
+      .where(
+        'Comment.commentType = :commentType AND commentTypeId = :commentTypeId',
+        {
+          commentType: commentType,
+          commentTypeId: commentTypeId,
+        },
+      )
+      .getCount();
+  }
 }
