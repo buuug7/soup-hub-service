@@ -14,7 +14,10 @@ export class Comment extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    type: 'varchar',
+    length: 512,
+  })
   content: string;
 
   // the comment belong to which type of resource

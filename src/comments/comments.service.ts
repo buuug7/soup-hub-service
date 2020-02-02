@@ -77,7 +77,8 @@ export class CommentsService {
           commentType: commentType,
           commentTypeId: commentTypeId,
         },
-      );
+      )
+      .orderBy('Comment.createdAt', 'DESC');
     return simplePagination(query, paginationParam);
   }
 
